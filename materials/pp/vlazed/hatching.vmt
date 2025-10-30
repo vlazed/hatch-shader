@@ -1,0 +1,21 @@
+screenspace_general
+{
+    $vertexshader "pp_vs30"
+    $pixshader "vlazed_hatching_ps30"
+	$basetexture "_rt_FullFrameFB"
+	$texture1 "pp/vlazed/hatch1"
+	$texture2 "pp/vlazed/hatch2"
+
+	"$no_fullbright" 			1
+	$ignorez        			1
+
+	$copyalpha 1
+	$writealpha 1
+	$linearwrite 1
+
+    $cull 1
+	// $vertextransform 		1
+
+	$c0_x 1
+	$c0_y 1
+}
