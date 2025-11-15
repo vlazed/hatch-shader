@@ -6,6 +6,7 @@ sampler TAMTEXTURE1 : register(s1);
 sampler TAMTEXTURE2 : register(s2);
 sampler UVBUFFER : register(s3);
 
+float4 hatchScale   : register(c0);
 float4 texelSize    : register( c3 );
 
 // Helper function to sample scene luminance.
@@ -50,10 +51,13 @@ struct PS_INPUT
 
 float4 main(PS_INPUT frag) : COLOR
 {
-    // TODO: Wait for Texture4 to test new buffer
     float4 uv = tex2D(UVBUFFER, frag.uv);
-    float intensity = sampleSceneLuminance(uv.xy);
-    float3 hatching = Hatching(uv.xy, intensity);
+    float intensity = sampleSceneLuminance(frag.uv.xy);
+    float s = sin(hatchScale.y);
+    float c = cos(hatchScale.y);
+    float2x2 rotation = float2x2(c, -s, -s, c);
+    float2 rotated = mul(uv.xy, rotation);  
+    float3 hatching = Hatching(rotated * hatchScale.x, intensity);
 
     return float4(hatching, 1);
 }

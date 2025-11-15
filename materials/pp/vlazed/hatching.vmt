@@ -1,10 +1,11 @@
 screenspace_general
 {
     $vertexshader "pp_vs30"
-    $pixshader "vlazed_hatching_ps30"
+    $pixshader "vlazed_hatching6_ps30"
 	$basetexture "_rt_FullFrameFB"
-	$texture1 "pp/vlazed/hatch1"
-	$texture2 "pp/vlazed/hatch2"
+	$texture1 "pp/vlazed/hatch2"
+	$texture2 "pp/vlazed/hatch1"
+	$texture3 "_rt_UV"
 
 	"$no_fullbright" 			1
 	$ignorez        			1
@@ -18,4 +19,6 @@ screenspace_general
 
 	$c0_x 1
 	$c0_y 1
+	$c3_x 1
+	$c3_y 1
 }

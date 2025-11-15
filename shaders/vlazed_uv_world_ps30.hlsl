@@ -3,6 +3,7 @@
 
 sampler WORLDPOS : register(s0);
 sampler NORMALTEXTURE : register(s1);
+sampler UVTEXTURE : register(s2);
 float2 texelSize    : register( c4 );
 
 struct PS_INPUT

@@ -8,7 +8,7 @@ local rt_UV = GetRenderTargetEx(
 	MATERIAL_RT_DEPTH_NONE,
 	bit.bor(4, 8, 16, 256, 512),
 	0,
-	29
+	24
 )
 
 local mat_UV_model = Material("vlazed/uv_model")
@@ -34,6 +34,9 @@ local function drawEntities()
 	end
 end
 
+-- Be careful when you enable this. 
+-- This causes crashes if the model has too many vertices
+-- TODO: Cache a filter for models with too many vertices or use a toolgun to add entities
 function render.DrawUVBuffer()
 	render.PushRenderTarget(rt_UV)
 	-- render.PushRenderTarget() -- Debug mode
