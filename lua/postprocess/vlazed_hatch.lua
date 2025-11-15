@@ -23,8 +23,8 @@ function render.DrawVlazedHatching()
 
 	local tam = pp_hatching_tam:GetString()
 
-	mat_hatching:SetTexture("$texture1", tam .. "2")
-	mat_hatching:SetTexture("$texture2", tam .. "1")
+	mat_hatching:SetTexture("$texture1", tam .. "1")
+	mat_hatching:SetTexture("$texture2", tam .. "2")
 	mat_hatching:SetFloat("$c0_x", pp_hatching_scale:GetFloat())
 	mat_hatching:SetFloat("$c0_y", math.rad(pp_hatching_angle:GetFloat()))
 	mat_hatching:SetFloat("$c3_x", 1 / ScrW())

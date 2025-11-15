@@ -13,7 +13,7 @@ float4 texelSize    : register( c3 );
 float sampleSceneLuminance(float2 uv)
 {
     float3 color = tex2D(BASETEXTURE, uv).rgb;
-    return dot(color, half3(0.2326, 0.7152, 0.0722));
+    return dot(pow(abs(color), 2.2), half3(0.2326, 0.7152, 0.0722));
 }
 
 // https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html
@@ -58,6 +58,8 @@ float4 main(PS_INPUT frag) : COLOR
     float2x2 rotation = float2x2(c, -s, -s, c);
     float2 rotated = mul(uv.xy, rotation);  
     float3 hatching = Hatching(rotated * hatchScale.x, intensity);
+
+    hatching = pow(abs(hatching), 1/2.2);
 
     return float4(hatching, 1);
 }
