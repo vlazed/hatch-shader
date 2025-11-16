@@ -1,6 +1,6 @@
 screenspace_general
 {
-    $pixshader "vlazed_uv_world2_ps30"
+    $pixshader "vlazed_uv_world_ps30"
 	$basetexture "_rt_WPDepth"
 	$texture1 "_rt_NormalsTangents"
 
