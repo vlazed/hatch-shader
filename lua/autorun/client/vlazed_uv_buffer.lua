@@ -113,9 +113,17 @@ local function isViewModelEntity(ent)
 	return ent:GetClass() == "viewmodel" or IsValid(ent:GetParent()) and ent:GetParent():GetClass() == "viewmodel"
 end
 
+local function isBrushPlane(ent)
+	return ent:GetBrushPlaneCount() > 0
+end
+
+local function isValidModel(entity)
+	return entity.GetModel and entity:GetModel() and #entity:GetModel() > 0 and util.IsValidModel(entity:GetModel())
+end
+
 local function initializeEntities()
 	for _, entity in ents.Iterator() do
-		if IsValid(entity) and not isViewModelEntity(entity) then
+		if IsValid(entity) and isValidModel(entity) and not isViewModelEntity(entity) and not isBrushPlane(entity) then
 			entities[entity:EntIndex()] = entity
 			table.insert(entityList, entity)
 		end

@@ -22,9 +22,9 @@ This adds a hatching shader. You can find this addon in `Post Process Tab > Shad
 
 ### Features
 
-- **Screenspace hatching**
-- **Change scale and angle of hatching**
-- **Custom tonal art map support**
+- **Screenspace hatching**: Hatches are applied on the frame
+- **Change color, scale, angle, and intensity of hatching**: Customize your hatches to fit your scene
+- **Custom tonal art map support**: Author your own tonal art maps and use them to hatch the world your way
 
 > [!WARNING]
 > This shader currently writes model uvs to the rendertarget `_rt_UV`. This can cause crashes with high poly models.
