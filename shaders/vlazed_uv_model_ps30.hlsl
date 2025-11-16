@@ -3,6 +3,7 @@
 
 sampler BASETEXTURE : register(s0);
 
+float4 scales : register(c0);
 float2 texelSize    : register( c4 );
 
 struct PS_INPUT
@@ -14,5 +15,5 @@ struct PS_INPUT
 
 float4 main(PS_INPUT frag) : COLOR
 {
-    return float4(frag.uv.x, frag.uv.y, 0, 1);
+    return float4(frag.uv.x * scales.x, frag.uv.y * scales.y, 0, 1);
 }

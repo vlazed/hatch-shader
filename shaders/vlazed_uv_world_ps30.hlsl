@@ -3,7 +3,8 @@
 
 sampler WORLDPOS : register(s0);
 sampler NORMALTEXTURE : register(s1);
-sampler UVTEXTURE : register(s2);
+
+float4 scales : register(c0);
 float2 texelSize    : register( c4 );
 
 struct PS_INPUT
@@ -33,14 +34,16 @@ float3 sampleWorldNormals(float2 uv)
 
 float4 main(PS_INPUT frag) : COLOR
 {
+    float worldScale = scales.x;
+
     float2 texCoord = (frag.pPos+0.5)*texelSize;
     float4 wpndepth = tex2D(WORLDPOS,texCoord);
     float4 worldPos = float4(1/wpndepth.xyz,1);
     float3 worldNormals = sampleWorldNormals(texCoord);
 
-    float2 uv_front = worldPos.xy;
-    float2 uv_side = worldPos.zy;
-    float2 uv_top = worldPos.xz;
+    float2 uv_front = worldPos.xy *= worldScale;
+    float2 uv_side = worldPos.zy *= worldScale;
+    float2 uv_top = worldPos.xz *= worldScale;
 
     // Triplanar mapping from 
     // https://www.ronja-tutorials.com/post/010-triplanar-mapping/

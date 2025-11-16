@@ -51,6 +51,20 @@ cvars.AddChangeCallback("pp_vlazedhatching", function(cvar, old, new)
 end, "vlazed_hatching_callback")
 enableHatching()
 
+---Helper for DForm
+---@param cPanel ControlPanel|DForm
+---@param name string
+---@param type "ControlPanel"|"DForm"
+---@return ControlPanel|DForm
+local function makeCategory(cPanel, name, type)
+	---@type DForm|ControlPanel
+	local category = vgui.Create(type, cPanel)
+
+	category:SetLabel(name)
+	cPanel:AddItem(category)
+	return category
+end
+
 list.Set("PostProcess", "Hatching (vlazed)", {
 
 	icon = "gui/postprocess/vlazedhatching.png",
@@ -67,7 +81,10 @@ list.Set("PostProcess", "Hatching (vlazed)", {
 
 		CPanel:CheckBox("Enable", "pp_vlazedhatching")
 
-		CPanel:ColorPicker(
+		local hatchSettings = makeCategory(CPanel, "Hatch Settings", "ControlPanel")
+		local uvSettings = makeCategory(CPanel, "UV Settings", "ControlPanel")
+
+		hatchSettings:ColorPicker(
 			"Color",
 			"pp_vlazedhatching_r",
 			"pp_vlazedhatching_g",
@@ -75,20 +92,26 @@ list.Set("PostProcess", "Hatching (vlazed)", {
 			"pp_vlazedhatching_a"
 		)
 
-		CPanel:NumSlider("Hatch scale", "pp_vlazedhatching_scale", 0, 100)
-		CPanel:NumSlider("Hatch angle", "pp_vlazedhatching_angle", -180, 180)
-		CPanel:NumSlider("Hatch intensity", "pp_vlazedhatching_intensity", -100, 100)
+		hatchSettings:NumSlider("Hatch scale", "pp_vlazedhatching_scale", 0, 100)
+		hatchSettings:NumSlider("Hatch angle", "pp_vlazedhatching_angle", -180, 180)
+		hatchSettings:NumSlider("Hatch intensity", "pp_vlazedhatching_intensity", -100, 100)
 		---@class HatchComboBox: DComboBox
-		local combo = CPanel:ComboBox("Tone map") ---@diagnostic disable-line: missing-parameter
+		local combo = hatchSettings:ComboBox("Tone map") ---@diagnostic disable-line: missing-parameter
 		for i, tam in ipairs(tonalArtMapName) do
 			combo:AddChoice(tam, i)
 		end
 		---@class HatchEntry: DTextEntry
-		local tamEntry = CPanel:TextEntry("Tonal art map path", "pp_vlazedhatching_tam")
+		local tamEntry = hatchSettings:TextEntry("Tonal art map path", "pp_vlazedhatching_tam")
+
+		uvSettings:CheckBox("UV buffer enabled", "uv_buffer_enable")
+
+		uvSettings:NumSlider("World scale", "uv_buffer_worldscale", 0, 256, 5)
+		uvSettings:NumSlider("Model scale X", "uv_buffer_modelscale_x", 0, 256, 5)
+		uvSettings:NumSlider("Model scale Y", "uv_buffer_modelscale_y", 0, 256, 5)
 
 		function combo:OnSelect(i, val, data)
 			local newPath = "pp/vlazed/" .. val
-			pp_hatching_tam:SetString("pp/vlazed/" .. val)
+			pp_hatching_tam:SetString(newPath)
 		end
 	end,
 })

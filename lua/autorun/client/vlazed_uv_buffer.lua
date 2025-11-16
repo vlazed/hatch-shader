@@ -1,3 +1,8 @@
+local enableBuffer = CreateClientConVar("uv_buffer_enable", "1", true, false, nil, 0, 1)
+local worldScale = CreateClientConVar("uv_buffer_worldscale", "0.03125", true, false, nil)
+local modelScaleX = CreateClientConVar("uv_buffer_modelscale_x", "1", true, false, nil)
+local modelScaleY = CreateClientConVar("uv_buffer_modelscale_y", "1", true, false, nil)
+
 local shaderName = "vlazed_uv_buffer"
 
 local rt_UV = GetRenderTargetEx(
@@ -42,6 +47,8 @@ function render.DrawUVBuffer()
 	-- render.PushRenderTarget() -- Debug mode
 
 	-- Render world with screenspace UVs
+	-- print(worldScale:GetFloat())
+	mat_UV_world:SetFloat("$c0_x", worldScale:GetFloat())
 	render.SetMaterial(mat_UV_world)
 	render.DrawScreenQuad()
 
@@ -66,6 +73,8 @@ function render.DrawUVBuffer()
 	render.SetStencilFailOperation(STENCIL_KEEP)
 	render.SetStencilZFailOperation(STENCIL_KEEP)
 
+	mat_UV_model:SetFloat("$c0_x", modelScaleX:GetFloat())
+	mat_UV_model:SetFloat("$c0_y", modelScaleY:GetFloat())
 	render.MaterialOverride(mat_UV_model)
 	drawEntities()
 
@@ -85,8 +94,19 @@ function render.DrawUVBuffer()
 end
 
 hook.Remove("RenderScreenspaceEffects", shaderName)
-hook.Add("RenderScreenspaceEffects", shaderName, function()
-	render.DrawUVBuffer()
+if enableBuffer:GetBool() then
+	hook.Add("RenderScreenspaceEffects", shaderName, function()
+		render.DrawUVBuffer()
+	end)
+end
+
+cvars.AddChangeCallback("uv_buffer_enable", function (convar, oldValue, newValue)
+	hook.Remove("RenderScreenspaceEffects", shaderName)
+	if tobool(newValue) then
+		hook.Add("RenderScreenspaceEffects", shaderName, function()
+			render.DrawUVBuffer()
+		end)	
+	end
 end)
 
 local function isViewModelEntity(ent)
