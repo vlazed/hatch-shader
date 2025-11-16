@@ -14,9 +14,9 @@ Add hatching to your GMod scene
 
 ## Description
 
-|![Preview](/media/hatch-preview.gif)|
-|--|
-|Hatching shader applied to Kleiner under harsh lighting. Hatch scale: 7.93; Hatch angle: 0; Hatch intensity: 6.00|
+|![Preview](/media/hatch-preview.gif)|![Preview](/media/hatch-world-preview.png)|
+|--|--|
+|Hatching shader applied to Kleiner under harsh lighting. Hatch scale: 7.93; Hatch angle: 0; Hatch intensity: 6.00|Hatching shader applied to the world. UV world scale: 0.03125; Hatch color: (171, 290, 255, 255)|
 
 This adds a hatching shader. You can find this addon in `Post Process Tab > Shaders > Hatching (vlazed)`
 
