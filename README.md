@@ -14,9 +14,9 @@ Add hatching to your GMod scene
 
 ## Description
 
-|![Preview](/media/hatch-preview.png)|
+|![Preview](/media/hatch-preview.gif)|
 |--|
-|Hatching shader applied to a Heavy under harsh lighting. Hatch scale: 12.17; Hatch angle: -93.94|
+|Hatching shader applied to Kleiner under harsh lighting. Hatch scale: 7.93; Hatch angle: 0; Hatch intensity: 6.00|
 
 This adds a hatching shader. You can find this addon in `Post Process Tab > Shaders > Hatching (vlazed)`
 
@@ -26,7 +26,7 @@ This adds a hatching shader. You can find this addon in `Post Process Tab > Shad
 - **Change scale and angle of hatching**
 - **Custom tonal art map support**
 
-> ![WARNING]
+> [!WARNING]
 > This shader currently writes model uvs to the rendertarget `_rt_UV`. This can cause crashes with high poly models.
 
 ### Rational

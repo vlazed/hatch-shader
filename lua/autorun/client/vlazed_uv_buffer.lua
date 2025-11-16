@@ -8,7 +8,7 @@ local rt_UV = GetRenderTargetEx(
 	MATERIAL_RT_DEPTH_NONE,
 	bit.bor(4, 8, 16, 256, 512),
 	0,
-	24
+	29
 )
 
 local mat_UV_model = Material("vlazed/uv_model")

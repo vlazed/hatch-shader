@@ -7,15 +7,18 @@ screenspace_general
 	$texture2 "pp/vlazed/hatch1"
 	$texture3 "_rt_UV"
 
+	"$linearread_basetexture"	1
+	"$linearread_texture1"	0
+	"$linearread_texture2"	0
 	"$no_fullbright" 			1
 	$ignorez        			1
 
-	$copyalpha 1
-	$writealpha 1
+	// $copyalpha 1
+	// $writealpha 1
 	$linearwrite 1
 
     $cull 1
-	// $vertextransform 		1
+	$vertextransform 		1
 
 	$c0_x 1
 	$c0_y 1

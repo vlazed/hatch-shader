@@ -4,6 +4,8 @@ local pp_hatching = CreateClientConVar("pp_vlazedhatching", "0", true, false, "E
 local pp_hatching_scale = CreateClientConVar("pp_vlazedhatching_scale", "8", true, false, "Hatching scale")
 local pp_hatching_tam = CreateClientConVar("pp_vlazedhatching_tam", "hatch", true, false, "Tonal art map")
 local pp_hatching_angle = CreateClientConVar("pp_vlazedhatching_angle", "0", true, false, "Hatching angle", -180, 180)
+local pp_hatching_intensity =
+	CreateClientConVar("pp_vlazedhatching_intensity", "6.0", true, false, "Hatching intensity")
 
 local width, height = ScrW(), ScrH()
 
@@ -27,6 +29,7 @@ function render.DrawVlazedHatching()
 	mat_hatching:SetTexture("$texture2", tam .. "2")
 	mat_hatching:SetFloat("$c0_x", pp_hatching_scale:GetFloat())
 	mat_hatching:SetFloat("$c0_y", math.rad(pp_hatching_angle:GetFloat()))
+	mat_hatching:SetFloat("$c0_z", pp_hatching_intensity:GetFloat())
 	mat_hatching:SetFloat("$c3_x", 1 / ScrW())
 	mat_hatching:SetFloat("$c3_y", 1 / ScrH())
 	render.SetMaterial(mat_hatching)
@@ -74,6 +77,7 @@ list.Set("PostProcess", "Hatching (vlazed)", {
 
 		CPanel:NumSlider("Hatch scale", "pp_vlazedhatching_scale", 0, 100)
 		CPanel:NumSlider("Hatch angle", "pp_vlazedhatching_angle", -180, 180)
+		CPanel:NumSlider("Hatch intensity", "pp_vlazedhatching_intensity", -100, 100)
 		---@class HatchComboBox: DComboBox
 		local combo = CPanel:ComboBox("Tone map") ---@diagnostic disable-line: missing-parameter
 		for i, tam in ipairs(tonalArtMapName) do
