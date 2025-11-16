@@ -2,10 +2,15 @@ local mat_hatching = Material("pp/vlazed/hatching")
 
 local pp_hatching = CreateClientConVar("pp_vlazedhatching", "0", true, false, "Enable hatching", 0, 1)
 local pp_hatching_scale = CreateClientConVar("pp_vlazedhatching_scale", "8", true, false, "Hatching scale")
-local pp_hatching_tam = CreateClientConVar("pp_vlazedhatching_tam", "hatch", true, false, "Tonal art map")
+local pp_hatching_tam = CreateClientConVar("pp_vlazedhatching_tam", "pp/vlazed/hatch", true, false, "Tonal art map")
 local pp_hatching_angle = CreateClientConVar("pp_vlazedhatching_angle", "0", true, false, "Hatching angle", -180, 180)
 local pp_hatching_intensity =
 	CreateClientConVar("pp_vlazedhatching_intensity", "6.0", true, false, "Hatching intensity")
+
+local pp_hatching_r = CreateClientConVar("pp_vlazedhatching_r", "255", true, false, "Hatching angle", 0, 255)
+local pp_hatching_g = CreateClientConVar("pp_vlazedhatching_g", "255", true, false, "Hatching angle", 0, 255)
+local pp_hatching_b = CreateClientConVar("pp_vlazedhatching_b", "255", true, false, "Hatching angle", 0, 255)
+local pp_hatching_a = CreateClientConVar("pp_vlazedhatching_a", "255", true, false, "Hatching angle", 0, 255)
 
 local width, height = ScrW(), ScrH()
 
@@ -25,11 +30,15 @@ function render.DrawVlazedHatching()
 
 	local tam = pp_hatching_tam:GetString()
 
-	mat_hatching:SetTexture("$texture1", tam .. "1")
-	mat_hatching:SetTexture("$texture2", tam .. "2")
+	mat_hatching:SetTexture("$texture1", tam .. "1") ---@diagnostic disable-line
+	mat_hatching:SetTexture("$texture2", tam .. "2") ---@diagnostic disable-line
 	mat_hatching:SetFloat("$c0_x", pp_hatching_scale:GetFloat())
 	mat_hatching:SetFloat("$c0_y", math.rad(pp_hatching_angle:GetFloat()))
 	mat_hatching:SetFloat("$c0_z", pp_hatching_intensity:GetFloat())
+	mat_hatching:SetFloat("$c1_x", pp_hatching_r:GetFloat() / 255)
+	mat_hatching:SetFloat("$c1_y", pp_hatching_g:GetFloat() / 255)
+	mat_hatching:SetFloat("$c1_z", pp_hatching_b:GetFloat() / 255)
+	mat_hatching:SetFloat("$c1_w", pp_hatching_a:GetFloat() / 255)
 	mat_hatching:SetFloat("$c3_x", 1 / ScrW())
 	mat_hatching:SetFloat("$c3_y", 1 / ScrH())
 	render.SetMaterial(mat_hatching)
@@ -76,7 +85,19 @@ list.Set("PostProcess", "Hatching (vlazed)", {
 
 		CPanel:Help("Draw hatches over the scene.")
 
-		local options = {}
+		local options = {
+			pp_vlazedhatching_r = 255,
+			pp_vlazedhatching_g = 255,
+			pp_vlazedhatching_b = 255,
+			pp_vlazedhatching_a = 255,
+			pp_vlazedhatching_scale = 8.00,
+			pp_vlazedhatching_angle = 0.00,
+			pp_vlazedhatching_intensity = 6.00,
+			pp_vlazedhatching_tam = "pp/vlazed/hatch",
+			uv_buffer_worldscale = 0.03125,
+			uv_buffer_modelscale_x = 1,
+			uv_buffer_modelscale_y = 1,
+		}
 		CPanel:ToolPresets("vlazedhatching", options)
 
 		CPanel:CheckBox("Enable", "pp_vlazedhatching")

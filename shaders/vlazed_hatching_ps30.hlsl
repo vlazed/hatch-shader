@@ -7,6 +7,18 @@ sampler TAMTEXTURE2 : register(s2);
 sampler UVBUFFER : register(s3);
 
 float4 hatchScale   : register(c0);
+float4 COLOR   : register(c1);
+
+// Combines the top and bottom colors using normal blending.
+// https://en.wikipedia.org/wiki/Blend_modes#Normal_blend_mode
+// This performs the same operation as Blend SrcAlpha OneMinusSrcAlpha.
+float4 alphaBlend(float4 top, float4 bottom)
+{
+    float3 color = (top.rgb * top.a) + (bottom.rgb * (1 - top.a));
+    float alpha = top.a + bottom.a * (1 - top.a);
+
+    return float4(color, alpha);
+}
 
 // https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html
 float3 Hatching(float2 _uv, half _intensity, half intensityScale)
@@ -61,5 +73,8 @@ half4 main(PS_INPUT frag) : COLOR
     // Apply hatching   
     half3 hatching = Hatching(rotated * hatchScale.x, intensity, hatchScale.z);
 
-    return half4(hatching, 1);
+    hatching.rgb *= COLOR.rgb;
+    half4 result = alphaBlend(half4(hatching, COLOR.a), color);
+
+    return result;
 }
