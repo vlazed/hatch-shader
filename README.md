@@ -29,9 +29,12 @@ This adds a hatching shader. You can find this addon in `Post Process Tab > Shad
 > [!WARNING]
 > This shader currently writes model uvs to the rendertarget `_rt_UV`. This can cause crashes with high poly models.
 
+> [!NOTE]
+> Due to the nature of `screenspace_general`, this shader uses `$softwareskin 1` and `$translucent 1` for models. Thus, hatching may render strangely with models, especially those with facial flexing.
+
 ### Rational
 
-TODO
+The existing texturize shaders allow one to mimic a sketching style. However, texturize is applied to the screen. It does not respect the shape of the subject in terms of shading. The hatching shader uses a UV buffer to "wrap" the pencil sketching effect around the model.
 
 ### Remarks
 
