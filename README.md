@@ -6,6 +6,7 @@ Add hatching to your GMod scene
 
 - [Description](#description)
   - [Features](#features)
+  - [Requirements](#requirements)
   - [Rational](#rational)
   - [Remarks](#remarks)
 - [Disclaimer](#disclaimer)
@@ -31,6 +32,10 @@ This adds a hatching shader. You can find this addon in `Post Process Tab > Shad
 
 > [!NOTE]
 > Due to the nature of `screenspace_general`, this shader uses `$softwareskin 1` and `$translucent 1` for models. Thus, hatching may render strangely with models, especially those with facial flexing.
+
+### Requirements
+
+- [GShader Library](https://steamcommunity.com/sharedfiles/filedetails/?id=3542644649) for _rt_NormalsTangents and _rt_WorldPos buffers. Both are critical for world UVs
 
 ### Rational
 
